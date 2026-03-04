@@ -1,0 +1,25 @@
+flowchart TD
+
+A[Raw CSV Data Sources] --> B[Snowflake RAW Layer]
+
+B --> C[Staging Layer]
+C --> D[dbt Transformations]
+
+D --> E[Data Quality Framework]
+E --> F[Scorecards & Reliability Metrics]
+
+D --> G[Metadata & Governance Layer]
+G --> H[Data Dictionary]
+G --> I[Lineage Mapping]
+G --> J[Data Contracts]
+
+D --> K[Business Data Marts]
+
+K --> L[Monitoring Layer]
+L --> M[Platform Dashboard]
+L --> N[SLA Alerts]
+L --> O[Anomaly Detection]
+
+style A fill:#f9f,stroke:#333
+style K fill:#9ff,stroke:#333
+style L fill:#ff9,stroke:#333
