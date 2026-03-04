@@ -1,15 +1,67 @@
-Welcome to your new dbt project!
+# dbt Transformation Layer
 
-### Using the starter project
+This directory contains the **dbt project used to build transformation models** for the Enterprise Data Platform.
 
-Try running the following commands:
-- dbt run
-- dbt test
+dbt is used to transform cleaned staging datasets into **analytics-ready models** used for reporting and monitoring.
 
+---
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+# dbt Project Structure
+
+```
+models/
+macros/
+tests/
+snapshots/
+seeds/
+```
+
+---
+
+# Transformation Layers
+
+The dbt project builds analytical datasets from the **STAGING schema**.
+
+Example transformation flow:
+
+```
+RAW → STAGING → dbt models → MART
+```
+
+---
+
+# Example Models
+
+Examples of models built in this project include:
+
+- customer metrics
+- order aggregates
+- retention KPIs
+- anomaly detection datasets
+
+---
+
+# Running dbt
+
+To run transformations:
+
+```
+dbt run
+```
+
+To run tests:
+
+```
+dbt test
+```
+
+---
+
+# dbt Benefits
+
+Using dbt provides:
+
+- modular SQL transformations
+- dependency tracking
+- version-controlled data pipelines
+- automated testing
