@@ -1,0 +1,74 @@
+version: 2
+
+models:
+
+  - name: stg_customers
+    description: >
+      Cleaned and standardized customer dataset derived from RAW Olist customer data.
+      This staging model standardizes column formats and prepares the dataset
+      for downstream analytical marts.
+
+    columns:
+
+      - name: customer_id
+        description: Unique identifier for each customer record.
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_unique_id
+        description: Business-level identifier representing a unique customer across orders.
+        tests:
+          - not_null
+
+      - name: customer_state
+        description: Two-letter state code where the customer resides.
+        tests:
+          - not_null
+
+      - name: customer_city
+        description: City where the customer resides.
+
+      - name: customer_zip_code_prefix
+        description: Postal code prefix for the customer location.
+
+
+
+  - name: stg_orders
+    description: >
+      Cleaned and standardized orders dataset derived from RAW Olist orders.
+      Each row represents a single order placed by a customer.
+
+    columns:
+
+      - name: order_id
+        description: Unique identifier for each order.
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        description: Foreign key referencing the customer placing the order.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+
+      - name: order_status
+        description: Current status of the order (delivered, shipped, canceled, etc).
+
+      - name: order_purchase_timestamp
+        description: Timestamp when the order was placed.
+
+      - name: order_approved_at
+        description: Timestamp when the payment for the order was approved.
+
+      - name: order_delivered_carrier_date
+        description: Timestamp when the order was handed to the carrier.
+
+      - name: order_delivered_customer_date
+        description: Timestamp when the order was delivered to the customer.
+
+      - name: order_estimated_delivery_date
+        description: Estimated delivery date for the order.

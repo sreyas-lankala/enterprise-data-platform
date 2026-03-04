@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: meta
+    database: ENTERPRISE_DATA_PLATFORM_DB
+    schema: META
+
+    tables:
+      - name: DATA_DICTIONARY
+      - name: LINEAGE_MAP
+      - name: DATA_OWNERSHIP
+      - name: DATA_PIPELINE_SLA

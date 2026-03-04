@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: dq
+    database: ENTERPRISE_DATA_PLATFORM_DB
+    schema: DQ
+
+    tables:
+      - name: DQ_RUNS
+
+      - name: DQ_TEST_RESULTS
+
+      - name: DQ_EXCEPTIONS
+
+      - name: ANOMALY_LOG

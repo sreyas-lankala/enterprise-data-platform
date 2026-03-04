@@ -1,0 +1,126 @@
+version: 2
+
+models:
+
+  - name: mart_customer_orders
+    description: >
+      Customer-level aggregated dataset that summarizes total orders placed
+      by each customer along with their first and last order timestamps.
+      This table serves as the foundational dataset for customer behavior analysis.
+
+    columns:
+
+      - name: customer_id
+        description: Unique identifier of the customer.
+        tests:
+          - not_null
+          - unique
+
+      - name: total_orders
+        description: Total number of orders placed by the customer.
+        tests:
+          - not_null
+
+      - name: first_order_date
+        description: Timestamp of the customer's first recorded order.
+
+      - name: last_order_date
+        description: Timestamp of the customer's most recent order.
+
+
+
+  - name: mart_customer_lifetime
+    description: >
+      Customer lifetime analytics dataset summarizing customer purchasing
+      behavior including order counts and lifecycle duration.
+
+    columns:
+
+      - name: customer_id
+        description: Unique identifier of the customer.
+        tests:
+          - not_null
+          - unique
+
+      - name: total_orders
+        description: Total number of orders placed by the customer.
+        tests:
+          - not_null
+
+      - name: first_order_date
+        description: Date when the customer placed their first order.
+
+      - name: last_order_date
+        description: Date when the customer placed their most recent order.
+
+      - name: customer_lifetime_days
+        description: Number of days between the first and last purchase.
+
+
+
+  - name: mart_customer_retention_kpis
+    description: >
+      Single-row KPI dataset summarizing customer retention metrics across
+      the platform including repeat purchase behavior and customer lifetime metrics.
+
+    columns:
+
+      - name: total_customers
+        description: Total number of customers in the dataset.
+        tests:
+          - not_null
+
+      - name: repeat_customers
+        description: Number of customers who placed more than one order.
+
+      - name: repeat_rate_pct
+        description: Percentage of customers who are repeat buyers.
+
+      - name: avg_lifetime_days
+        description: Average customer lifetime in days across the dataset.
+
+
+
+  - name: mart_state_kpis
+    description: >
+      State-level aggregated metrics summarizing order distribution and
+      customer activity across geographic regions.
+
+    columns:
+
+      - name: customer_state
+        description: Two-letter state code representing customer location.
+        tests:
+          - not_null
+
+      - name: total_orders
+        description: Total number of orders placed by customers in the state.
+        tests:
+          - not_null
+
+      - name: total_customers
+        description: Total number of customers located in the state.
+
+      - name: avg_orders_per_customer
+        description: Average number of orders per customer in the state.
+
+
+
+  - name: state_kpi_anomalies
+    description: >
+      Analytical dataset used for anomaly detection across state-level order
+      metrics. Flags states that deviate significantly from expected order patterns.
+
+    columns:
+
+      - name: customer_state
+        description: State where anomaly is detected.
+
+      - name: total_orders
+        description: Observed number of orders for the state.
+
+      - name: avg_orders_per_customer
+        description: Average orders per customer for the state.
+
+      - name: anomaly_flag
+        description: Indicator flag identifying abnormal behavior.

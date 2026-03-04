@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: raw
+    database: ENTERPRISE_DATA_PLATFORM_DB
+    schema: RAW
+
+    tables:
+      - name: olist_customers_raw
+      - name: olist_orders_raw
