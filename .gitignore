@@ -9,3 +9,14 @@ data/processed/*
 
 # mac
 .DS_Store
+
+# dbt artifacts
+target/
+logs/
+
+# Python
+.venv/
+__pycache__/
+
+# OS
+.DS_Store
