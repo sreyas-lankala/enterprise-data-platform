@@ -13,45 +13,42 @@ jobs:
 
     steps:
 
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.10"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
 
-    - name: Install dependencies
-      run: |
-        pip install dbt-core
-        pip install dbt-snowflake
-        pip install sqlfluff
+      - name: Install Dependencies
+        run: |
+          pip install dbt-core
+          pip install dbt-snowflake
+          pip install sqlfluff
 
-    - name: Create dummy dbt profile
-      run: |
-        mkdir -p ~/.dbt
-        echo "edp_dbt:
-          target: dev
-          outputs:
-            dev:
-              type: snowflake
-              account: dummy
-              user: dummy
-              password: dummy
-              role: dummy
-              database: dummy
-              warehouse: dummy
-              schema: dummy
-              threads: 1" > ~/.dbt/profiles.yml
+      - name: Create dummy dbt profile
+        run: |
+          mkdir -p ~/.dbt
+          echo "edp_dbt:
+            target: dev
+            outputs:
+              dev:
+                type: snowflake
+                account: dummy
+                user: dummy
+                password: dummy
+                role: dummy
+                database: dummy
+                warehouse: dummy
+                schema: dummy
+                threads: 1" > ~/.dbt/profiles.yml
 
-    - name: Validate dbt project
-      run: |
-        cd edp_dbt
-        dbt parse
+      - name: Validate dbt Project
+        run: |
+          cd edp_dbt
+          dbt parse
 
-    - name: Lint SQL files
-      run: |
-        sqlfluff lint sql_platform
-
-    - name: CI completed
-      run: echo "Enterprise Data Platform CI passed"
+      - name: Lint SQL Files
+        run: |
+          sqlfluff lint sql_platform
