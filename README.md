@@ -4,7 +4,6 @@ Snowflake • dbt • Data Quality • Metadata Governance • Data Reliability 
 
 ![Enterprise Data Platform Architecture](architecture/enterprise_data_platform_architecture.png)
 
-Snowflake • dbt • Data Quality • Metadata Governance • Data Reliability • Data Observability • CI/CD • Orchestration
 
 ---
 
@@ -452,7 +451,7 @@ Lineage tracking enables:
 |------|------|
 | Snowflake | Data warehouse |
 | dbt | Transformations |
-| SQL | Data modeling |
+| SQL | Data modeling |Python
 | GitHub | Version control |
 | Apache Airflow | Pipeline orchestration |
 | GitHub Actions | CI/CD automation |
