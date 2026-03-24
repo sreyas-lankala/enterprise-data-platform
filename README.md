@@ -1,488 +1,176 @@
 # Enterprise Data Quality & Governance Platform
 
-Snowflake • dbt • Data Quality • Metadata Governance • Data Reliability • Data Observability
+> **Snowflake · dbt · Apache Airflow · Python · SQL · GitHub Actions**
 
-![Enterprise Data Platform Architecture](architecture/enterprise_data_platform_architecture.png)
+A full-stack enterprise data platform implementing **metadata-driven data quality engineering**, governance frameworks, and operational observability — built with the modern data stack to demonstrate how organizations achieve trusted, reliable analytics.
 
-
----
-
-# Overview
-
-This project demonstrates a **modern enterprise data platform architecture** built using **Snowflake and dbt** with integrated:
-
-• Data Quality Monitoring  
-• Metadata Governance  
-• Data Contracts  
-• Data Lineage  
-• Data Reliability Monitoring  
-• Operational Observability  
-• Pipeline Orchestration  
-• CI/CD Automation  
-
-The platform simulates how organizations build **trusted data systems** where pipelines are governed, monitored, and validated to ensure reliable analytics.
-
-The architecture follows a **layered enterprise data platform design pattern** commonly used in modern analytics environments.
+[![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![SQL](https://img.shields.io/badge/SQL-4479A1?style=flat-square&logo=postgresql&logoColor=white)]()
+[![Snowflake](https://img.shields.io/badge/Snowflake-29B5E8?style=flat-square&logo=snowflake&logoColor=white)](https://snowflake.com)
+[![dbt](https://img.shields.io/badge/dbt-FF694B?style=flat-square&logo=dbt&logoColor=white)](https://getdbt.com)
+[![Apache Airflow](https://img.shields.io/badge/Apache_Airflow-017CEE?style=flat-square&logo=apacheairflow&logoColor=white)](https://airflow.apache.org)
+[![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)](https://github.com/features/actions)
 
 ---
 
-# Platform Architecture
+## 🎯 Overview
 
-The platform follows a **layered data architecture**.
+This project demonstrates a modern enterprise data platform architecture built with Snowflake and dbt, integrating:
+
+- **Data Quality Monitoring** — metadata-driven rule engine with 65+ validation checks
+- **Metadata Governance** — dataset ownership, lineage mapping, data dictionary, SLA tracking
+- **Data Contracts** — schema enforcement between producers and consumers
+- **Data Lineage** — end-to-end traceability from RAW to MART
+- **Operational Observability** — real-time schema drift, freshness, and volume anomaly detection
+- **CI/CD Automation** — GitHub Actions pipeline validating every push
+
+The platform simulates how organizations build trusted data systems where pipelines are governed, monitored, and validated to ensure reliable analytics.
+
+---
+
+## 📊 Platform Metrics
+
+| Component | Count |
+|-----------|-------|
+| Snowflake Schemas | 6 (RAW, STAGING, MART, DQ, META, OPS) |
+| SQL Scripts | 40+ |
+| dbt Models | 25+ |
+| Data Quality Rules | 65+ |
+| Governance Tables | 6 |
+| Monitoring Views | 10+ |
+
+---
+
+## 📐 Architecture
 
 ```
 Source Systems
-      ↓
-RAW Layer
-      ↓
-STAGING Layer
-      ↓
-MART Layer
+      │
+      ▼
+┌──────────┐
+│  RAW     │  ← Source-of-truth ingestion (customers, orders, payments, sellers)
+└────┬─────┘
+     │
+     ▼
+┌──────────┐
+│ STAGING  │  ← Schema normalization · validation · transformation prep
+└────┬─────┘
+     │
+     ▼
+┌──────────┐
+│  MART    │  ← dbt models: customer metrics · order aggregates · retention KPIs
+└────┬─────┘
+     │
+     ├─────────────────────┐
+     ▼                     ▼
+┌──────────┐         ┌──────────┐
+│    DQ    │         │   META   │
+│ Quality  │         │Governance│  ← data dictionary · ownership · lineage · contracts
+│ Engine   │         └──────────┘
+└────┬─────┘
+     │
+     ▼
+┌──────────┐
+│   OPS    │  ← Observability: pipeline health · SLA breaches · anomaly alerts
+└──────────┘
+
+Orchestration: Apache Airflow DAGs  |  CI/CD: GitHub Actions
 ```
-
-Supporting platform capabilities:
-
-```
-Data Quality Framework
-Metadata Governance
-Data Contracts
-Reliability Monitoring
-Operational Observability
-Pipeline Orchestration
-CI/CD Automation
-```
-
-This design enables:
-
-• trusted analytical datasets  
-• traceable lineage across transformations  
-• enforceable governance rules  
-• automated validation and monitoring  
 
 ---
 
-# 🚀 Platform Execution
+## 🔧 Tech Stack
 
-The platform can be executed end-to-end using the SQL scripts provided in the repository.
-
-This simulates how enterprise data teams orchestrate:
-
-• data ingestion  
-• transformation pipelines  
-• validation frameworks  
-• governance metadata  
-• operational monitoring  
+| Technology | Purpose |
+|-----------|---------|
+| **Snowflake** | Cloud data warehouse (RAW → STAGING → MART) |
+| **dbt** | SQL transformations, lineage tracking, modular models, tests |
+| **Apache Airflow** | Pipeline orchestration and scheduling |
+| **Python** | Validation scripts, quality rule engine, automation |
+| **SQL** | Data modeling, quality checks, governance metadata |
+| **GitHub Actions** | CI/CD — validates platform on every push |
 
 ---
 
-## Step 1 — Create Platform Infrastructure
+## 🏗️ Platform Execution
 
-Run:
+Run the full platform end-to-end:
 
+**Step 1 — Create Platform Infrastructure**
 ```sql
 sql_platform/01_platform_setup/001_create_platform.sql
 ```
+Creates schemas: RAW, STAGING, MART, DQ, META, OPS
 
-This script creates the Snowflake platform environment.
-
-Schemas created:
-
-- RAW
-- STAGING
-- MART
-- DQ
-- META
-- OPS
-
----
-
-## Step 2 — Create RAW Data Layer
-
-Execute:
-
+**Step 2 — Load RAW Data**
 ```sql
 sql_platform/02_raw_layer/004_create_raw_tables.sql
 sql_platform/02_raw_layer/005_load_raw_data.sql
 ```
 
-This loads source datasets into the **RAW schema**.
-
-Example datasets:
-
-- customers
-- orders
-- order_items
-- payments
-- sellers
-
-The RAW layer preserves **source-of-truth data without transformation**.
-
----
-
-## Step 3 — Run STAGING Transformations
-
-Execute:
-
+**Step 3 — Run STAGING Transformations**
 ```sql
 sql_platform/03_staging_layer/006_stg_customers_validation.sql
 ```
 
-The staging layer performs:
-
-• schema normalization  
-• column standardization  
-• basic validation rules  
-• transformation preparation  
-
----
-
-## Step 4 — Execute dbt Models
-
-Run dbt transformations:
-
+**Step 4 — Execute dbt Models**
 ```bash
 cd edp_dbt
 dbt run
+dbt test
 ```
 
-dbt produces analytics-ready datasets in the **MART schema**.
-
-Capabilities include:
-
-• modular SQL transformations  
-• dependency management  
-• lineage tracking  
-• reproducible pipelines  
-
----
-
-## Step 5 — Run Data Quality Framework
-
-Execute:
-
+**Step 5 — Run Data Quality Framework**
 ```sql
 sql_platform/04_data_quality/007_data_quality_validation.sql
 sql_platform/04_data_quality/036_data_quality_rule_engine.sql
 ```
 
-The framework executes automated validation rules and logs failures.
-
----
-
-## Step 6 — Populate Metadata Governance Layer
-
-Execute scripts in:
-
-```
-sql_platform/05_metadata/
+**Step 6 — Populate Metadata Governance Layer**
+```sql
+sql_platform/05_metadata/   -- data dictionary, ownership, lineage, contracts, SLAs
 ```
 
-This builds governance metadata including:
-
-• data dictionary  
-• data ownership  
-• lineage mapping  
-• data contracts  
-• pipeline SLA tracking  
-
----
-
-## Step 7 — Run Monitoring Layer
-
-Execute monitoring views in:
-
-```
-sql_platform/07_monitoring/
+**Step 7 — Run Monitoring Layer**
+```sql
+sql_platform/07_monitoring/  -- schema drift · freshness · volume anomalies · SLA breaches
 ```
 
-These views provide operational monitoring metrics.
-
----
-
-## Optional — Execute Full Platform
-
-Run:
-
+**Or — Run the full platform in one shot:**
 ```sql
 sql_platform/000_run_full_platform.sql
 ```
 
-Execution flow:
+---
+
+## 📁 Repository Structure
 
 ```
-RAW → STAGING → dbt → Data Quality → Metadata Governance → Monitoring
-```
-
----
-
-# Pipeline Orchestration
-
-The platform supports automated orchestration using **Apache Airflow**.
-
-Airflow manages execution across ingestion, transformation, validation, governance updates, and monitoring.
-
-Pipeline flow:
-
-```
-RAW Ingestion
-      ↓
-STAGING Transformations
-      ↓
-dbt Model Execution
-      ↓
-Data Quality Validation
-      ↓
-Metadata Governance Updates
-      ↓
-Observability Monitoring
-```
-
-Example orchestration DAG:
-
-```
-orchestration/airflow_data_platform_dag.py
-```
-
-This demonstrates how the platform could be scheduled in a production environment.
-
----
-
-# CI/CD Pipeline
-
-The repository includes a **GitHub Actions CI workflow**.
-
-Workflow file:
-
-```
-.github/workflows/data_platform_ci.yml
-```
-
-The CI pipeline validates the platform whenever code is pushed.
-
-CI pipeline steps:
-
-• repository checkout  
-• environment setup  
-• dbt installation  
-• project structure validation  
-• SQL script checks  
-
-This ensures reproducible platform deployments.
-
----
-
-# Platform Schemas
-
-| Schema | Purpose |
-|------|------|
-| RAW | Raw ingestion layer |
-| STAGING | Data normalization |
-| MART | Analytics-ready datasets |
-| DQ | Data quality monitoring |
-| META | Metadata governance |
-| OPS | Platform observability |
-
----
-
-# Snowflake Platform Schemas
-
-![Snowflake Schemas](screenshots/09_snowflake_schemas.png)
-
----
-
-# Data Ingestion Layer
-
-Source datasets are loaded into the **RAW schema**.
-
-![RAW Layer](screenshots/01_raw_layer_tables.png)
-
-Example tables:
-
-- customers
-- orders
-- order_items
-- payments
-
----
-
-# Transformation Layer
-
-The **STAGING schema** prepares datasets for analytical modeling.
-
-![STAGING Layer](screenshots/02_staging_layer_tables.png)
-
-Responsibilities include:
-
-• schema normalization  
-• field standardization  
-• transformation preparation  
-
----
-
-# Analytical Models (dbt)
-
-dbt models generate analytics-ready datasets in the **MART schema**.
-
-![dbt Models](screenshots/03_dbt_models.png)
-
-Example models:
-
-- customer lifetime metrics
-- order aggregates
-- retention KPIs
-- anomaly detection datasets
-
----
-
-# Data Quality Framework
-
-A dedicated **DQ schema** manages validation and monitoring.
-
-![DQ Tables](screenshots/04_dq_tables.png)
-
-Framework components include:
-
-• rule execution engine  
-• exception tracking  
-• anomaly logging  
-• validation result storage  
-
----
-
-# Metadata-Driven Data Quality Rules
-
-The platform implements a **metadata-driven data quality rule engine**.
-
-Example validations include:
-
-• NOT NULL validation  
-• duplicate detection  
-• business rule enforcement  
-
-![Metadata Rules](screenshots/10_metadata_dq_rules.png)
-
----
-
-# Data Quality Scorecards
-
-Automated **reliability scorecards** monitor pipeline health.
-
-![DQ Scorecard](screenshots/05_dq_scorecard_results.png)
-
-Metrics tracked:
-
-• tests executed  
-• failed tests  
-• exception counts  
-• pipeline run status  
-
----
-
-# Metadata Governance Layer
-
-The **META schema** stores governance metadata.
-
-![Metadata Tables](screenshots/06_metadata_tables.png)
-
-| Table | Purpose |
-|------|------|
-| DATA_DICTIONARY | Business definitions |
-| DATA_OWNERSHIP | Data ownership |
-| LINEAGE_MAP | Dataset lineage |
-| DATA_CONTRACTS | Schema validation |
-| DATA_PIPELINE_SLA | SLA monitoring |
-| DATA_QUALITY_RULES | Validation rules |
-
----
-
-# Platform Monitoring
-
-Operational monitoring is implemented in the **OPS schema**.
-
-![Monitoring Views](screenshots/07_ops_monitoring_views.png)
-
-Capabilities include:
-
-• pipeline health monitoring  
-• SLA breach detection  
-• anomaly alerts  
-• reliability metrics  
-
----
-
-# Data Lineage Example
-
-```
-RAW_CUSTOMERS
-      ↓
-STAGING_CUSTOMERS
-      ↓
-MART_CUSTOMER_METRICS
-      ↓
-DQ_SCORECARD
-      ↓
-OPS_MONITORING_VIEWS
-```
-
-Lineage tracking enables:
-
-• traceability  
-• root cause analysis  
-• governance enforcement  
-
----
-
-# Platform Metrics
-
-| Component | Count |
-|------|------|
-| Snowflake Schemas | 6 |
-| SQL Scripts | 40+ |
-| dbt Models | 25+ |
-| Governance Tables | 6 |
-| Monitoring Views | 10+ |
-| Data Quality Rules | 65+ |
-
----
-
-# Technology Stack
-
-| Technology | Purpose |
-|------|------|
-| Snowflake | Data warehouse |
-| dbt | Transformations |
-| SQL | Data modeling |Python
-| GitHub | Version control |
-| Apache Airflow | Pipeline orchestration |
-| GitHub Actions | CI/CD automation |
-
----
-
-# Repository Structure
-
-```
-enterprise-data-platform
+enterprise-data-platform/
 │
-├── architecture
+├── architecture/
 │   ├── enterprise_data_platform_architecture.png
 │   └── platform_architecture.mmd
 │
-├── orchestration
-│   └── airflow_data_platform_dag.py
+├── orchestration/
+│   └── airflow_data_platform_dag.py       # Airflow DAG — full pipeline
 │
-├── docs
-│   └── governance_framework.md
-│
-├── edp_dbt
-│   ├── models
-│   ├── macros
-│   ├── tests
+├── edp_dbt/                               # dbt project
+│   ├── models/                            # 25+ SQL transformation models
+│   ├── macros/
+│   ├── tests/                             # dbt data tests
 │   └── dbt_project.yml
 │
-├── sql_platform
-│   └── 000_run_full_platform.sql
+├── sql_platform/
+│   ├── 000_run_full_platform.sql          # One-shot full execution
+│   ├── 01_platform_setup/
+│   ├── 02_raw_layer/
+│   ├── 03_staging_layer/
+│   ├── 04_data_quality/                   # 65+ quality rules
+│   ├── 05_metadata/                       # Governance tables
+│   └── 07_monitoring/                     # Observability views
 │
-├── screenshots
+├── screenshots/                           # Platform layer screenshots
 │   ├── 01_raw_layer_tables.png
 │   ├── 02_staging_layer_tables.png
 │   ├── 03_dbt_models.png
@@ -492,34 +180,59 @@ enterprise-data-platform
 │   ├── 07_ops_monitoring_views.png
 │   └── 08_platform_layer_summary.png
 │
-└── .github/workflows
-    └── data_platform_ci.yml
+├── docs/
+│   └── governance_framework.md
+│
+└── .github/workflows/
+    └── data_platform_ci.yml               # CI/CD pipeline
 ```
 
 ---
 
-# Target Roles
+## 🔍 Key Features Deep Dive
 
-This project demonstrates skills relevant to:
+### Metadata-Driven Data Quality Rule Engine
+The DQ schema stores and executes validation rules dynamically:
+- **NOT NULL validation** — ensures critical columns are populated
+- **Duplicate detection** — identifies and flags duplicate records
+- **Business rule enforcement** — custom rules per dataset
+- **Quality scorecards** — tracks tests executed, failures, exception counts, run status
 
-• Data Quality Engineer  
-• Data Governance Engineer  
-• Metadata Engineer  
-• Analytics Engineer  
-• Data Platform Engineer  
-• Data Reliability Engineer
+### Metadata Governance Layer (META Schema)
+| Table | Purpose |
+|-------|---------|
+| DATA_DICTIONARY | Business definitions for every column |
+| DATA_OWNERSHIP | Dataset steward assignments |
+| LINEAGE_MAP | Source-to-target dataset lineage |
+| DATA_CONTRACTS | Schema validation between teams |
+| DATA_PIPELINE_SLA | SLA definitions and breach tracking |
+| DATA_QUALITY_RULES | Rule catalog for the DQ engine |
+
+### Operational Observability (OPS Schema)
+- Pipeline health monitoring and alerting
+- SLA breach detection with notification hooks
+- Schema drift detection (column adds, drops, type changes)
+- Record volume anomaly flagging
+- Reliability metrics dashboards
 
 ---
 
-# Author
+## 🎯 Target Roles Demonstrated
 
-Sreyas Lankala  
+- **Data Quality Engineer** — rule engine, validation framework, quality scorecards
+- **Data Governance Engineer** — metadata catalog, lineage, data contracts, stewardship
+- **Analytics Engineer** — dbt modeling, medallion architecture, data marts
+- **Data Engineer** — Airflow orchestration, Snowflake pipelines, CI/CD
+- **Data Platform Engineer** — end-to-end platform architecture, observability
 
-Data Quality • Governance • Metadata • Data Reliability  
+---
 
-LinkedIn  
-https://www.linkedin.com/in/sreyas-lankala/
+## 👤 Author
 
-GitHub  
+**Sreyas Lankala** — Data Quality & Governance Engineer
 
-https://github.com/sreyas-lankala
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/sreyas-lankala/)
+[![Email](https://img.shields.io/badge/Email-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:sreyaslankala@gmail.com)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/sreyas-lankala)
+
+> 🛂 Authorized to work in the USA on F-1 OPT starting May 27, 2026 (STEM OPT eligible — 3-year authorization)
