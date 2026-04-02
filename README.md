@@ -2,7 +2,7 @@
 
 > **Snowflake · dbt · Apache Airflow · Python · SQL · GitHub Actions**
 
-A full-stack enterprise data platform implementing **metadata-driven data quality engineering**, governance frameworks, and operational observability — built with the modern data stack to demonstrate how organizations achieve trusted, reliable analytics.
+A full-stack enterprise data platform implementing **metadata-driven data quality engineering**, governance frameworks, and operational observability — built with the modern data stack to demonstrate how organizations achieve trusted, reliable analytics
 
 [![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![SQL](https://img.shields.io/badge/SQL-4479A1?style=flat-square&logo=postgresql&logoColor=white)]()
