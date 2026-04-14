@@ -24,7 +24,7 @@ This project demonstrates a modern enterprise data platform architecture built w
 - **Operational Observability** — real-time schema drift, freshness, and volume anomaly detection
 - **CI/CD Automation** — GitHub Actions pipeline validating every push
 
-The platform simulates how organizations build trusted data systems where pipelines are governed, monitored, and validated to ensure reliable analytics.
+The platform simulates how organizations build trusted data systems where pipelines are governed, monitored, and validated to ensure reliable analytics
 
 ---
 
